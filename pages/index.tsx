@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Sidebar from '../components/Sidebar'
+import Center from '../components/Center'
 
 const Home: NextPage = () => {
   return (
@@ -10,8 +11,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="">
+      <main className="flex">
         <Sidebar />
+
+        <Center />
       </main>
 
     </div>

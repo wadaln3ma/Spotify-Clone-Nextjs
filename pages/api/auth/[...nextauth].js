@@ -14,15 +14,15 @@ async function refreshAccessToken(token) {
     return {
       ...token,
       accessToken: refreshedToken.access_token,
-      accessTokenExpires: Date.now() + refreshToken.expires_in * 1000,
+      accessTokenExpires: Date.now() + refreshedToken.expires_in * 1000,
       refreshToken: refreshedToken.refresh_token ?? token.refreshToken,
-    };
+    }
   } catch (error) {
 
     return {
       ...token,
       error: 'RefreshAccessTokenError',
-    };
+    }
   }
 }
 
@@ -49,7 +49,7 @@ export default NextAuth({
           refreshToken: account.refresh_token,
           username: account.providerAccountId,
           accessTokenExpires: account.expires_at * 1000,
-        };
+        }
       }
 
       // Return previous token if the access token hasn't expired yet
@@ -62,8 +62,8 @@ export default NextAuth({
     },
 
     async session({ session, token }) {
-      session.user.accessToken = token.accessToken;
-      session.user.refreshToken = token.refreshToken;
+      session.user.accessToken = token.accessToken
+      session.user.refreshToken = token.refreshToken
       session.user.username = token.username
 
       return session

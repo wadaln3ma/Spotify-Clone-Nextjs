@@ -1,8 +1,23 @@
+import { useEffect, useState } from 'react'
 import { HeartIcon, HomeIcon, LibraryIcon, PlusCircleIcon, RssIcon, SearchIcon } from "@heroicons/react/outline"
+import useSpotify from '../hooks/useSpotify'
+import { useSession } from 'next-auth/react'
 
 const Sidebar = ()=>{
+  const spotifyApi = useSpotify()
+  const { data: session, status } = useSession()
+  const [playlists, setPlaylist] = useState([])
+
+  useEffect(() => {
+    if (spotifyApi.getAccessToken()) {
+      spotifyApi.getUserPlaylists().then((data) => {
+        setPlaylist(data.body.items)
+      });
+    }
+  }, [session, spotifyApi])
+
   return (
-    <div className="border-r border-gray-900 text-gray-500 p-5">
+    <div className="border-r border-gray-900 text-gray-500 p-5 text-xs lg:text-sm overflow-y-scroll no-scrollbar h-screen sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex">
       <div className="space-y-4">
         <button className="flex items-center space-x-2 hover:text-white">
           <HomeIcon className="h-5"/>
@@ -37,6 +52,16 @@ const Sidebar = ()=>{
         </button>
         
         <hr className="border-t-[0.1px] border-gray-900"/>
+
+        {/* Playlists...  */}
+        {playlists.map((playlist) => (
+          <p
+            key={playlist.id}
+            className="cursor-pointer hover:text-white"
+          >
+            {playlist.name}
+          </p>
+        ))}
 
       </div>
     </div>

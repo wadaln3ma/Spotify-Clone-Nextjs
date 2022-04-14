@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react"
 import {ChevronDownIcon} from "@heroicons/react/outline"
-import {useSession} from "next-auth/react"
+import {signOut, useSession} from "next-auth/react"
 import { shuffle } from 'lodash'
 import { useRecoilState, useRecoilValue } from "recoil"
 import { playlistIdState, playlistState } from "../atoms/playlistAtom"
 import useSpotify from "../hooks/useSpotify"
+import Songs from "./Songs"
 
 const colors = [
   'from-indigo-500',
@@ -41,8 +42,10 @@ const Center = ()=>{
 
   return (
     <div className="flex-grow text-white">
-      <header className="absolute top-5 right-8">
-        <div className="flex items-center bg-black opacity-90 hover:opacity-80 space-x-3 p-1 pr-2 cursor-pointer rounded-full">
+      <header onClick={signOut} className="absolute top-5 right-8">
+        <div
+          className="flex items-center bg-black opacity-90 hover:opacity-80 space-x-3 p-1 pr-2 cursor-pointer rounded-full"
+        >
           <img alt="" src={session?.user.image} className="h-10 rounded-full" />
           <p>{session?.user.name}</p>
           <ChevronDownIcon className="h-6" />
@@ -62,6 +65,10 @@ const Center = ()=>{
           </h1>
         </div>
       </section>
+
+      <div>
+        <Songs />
+      </div>
 
     </div>
 )}

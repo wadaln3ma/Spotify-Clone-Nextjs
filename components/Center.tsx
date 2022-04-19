@@ -20,13 +20,14 @@ const colors = [
 const Center = ()=>{
 
   const { data: session } = useSession()
-  const [color, setColor] = useState(null)
+  const [color, setColor] = useState("")
   const playlistId = useRecoilValue(playlistIdState)
   const spotifyApi = useSpotify()
   const [playlist, setPlaylist] = useRecoilState(playlistState)
 
   useEffect(() => {
-    setColor(shuffle(colors).pop())
+    const randColor : any = shuffle(colors).pop()
+    setColor(randColor)
   }, [playlistId])
 
   useEffect(() => {
